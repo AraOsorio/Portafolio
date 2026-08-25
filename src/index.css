@@ -93,6 +93,25 @@ body {
   opacity: 1;
   clip-path: inset(0 0 0 0);
 }
+.oncobot-survey-bar {
+  opacity: 1;
+  transform: none;
+  transition: width 2.5s ease-out;
+  width: 0 !important;
+}
+.oncobot-survey-bar.is-visible {
+  width: var(--survey-value) !important;
+}
+.work-carousel-track {
+  display: flex;
+  height: 100%;
+  animation: work-carousel-loop 42s linear infinite;
+  will-change: transform;
+}
+@keyframes work-carousel-loop {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 .motion-stagger > * {
   opacity: 0;
   transform: translate3d(0, 16px, 0);
@@ -132,12 +151,15 @@ body {
   .motion-reveal,
   .motion-fade,
   .motion-image-reveal,
+  .work-carousel-track,
   .motion-stagger > * {
     opacity: 1;
     transform: none;
     clip-path: none;
     transition: none;
   }
+  .work-carousel-track { animation: none; }
+  .oncobot-survey-bar { transition: none; width: var(--survey-value) !important; }
   .motion-rotate { animation: none; }
   .motion-hover-brutalist,
   .motion-press { transition: none; }

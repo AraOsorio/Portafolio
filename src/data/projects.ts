@@ -3,6 +3,7 @@ export interface ProjectMeta {
   num: string;
   category: "ux-ui" | "graphic-design";
   fullTitle: string;
+  hook?: string;
   tags: string[];
   intro: string;
   year: string;
@@ -41,9 +42,10 @@ export const PROJECTS: ProjectMeta[] = [
     slug: "venture-predictor",
     num: "02",
     category: "ux-ui",
-    fullTitle: "VENTURE PREDICTOR",
-    tags: ["PRODUCT DESIGN", "AI"],
-    intro: "An AI-powered platform designed to help early-stage startups evaluate market fit. Led UX strategy, interaction design, and design system creation.",
+    fullTitle: "ONCOBOT",
+    hook: "¿Y si pudieras tener toda la información del paciente al instante, desde un solo lugar?",
+    tags: ["UX/UI", "UX RESEARCH", "PRODUCT DESIGN"],
+    intro: "Proyecto desarrollado durante un Diplomado UX Design para centralizar la información de pacientes oncológicos infantiles y facilitar la orientación de sus tutores.",
     year: "2025",
     heroBg: PURPLE,
     heroText: INK,

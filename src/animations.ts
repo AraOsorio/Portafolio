@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type RevealDirection = "up" | "down" | "left" | "right" | "none";
 
@@ -11,6 +11,7 @@ interface ScrollRevealOptions {
 
 export function useScrollReveal<T extends HTMLElement>(options: ScrollRevealOptions = {}) {
   const elementRef = useRef<T | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const { direction = "up", threshold = 0.16, rootMargin = "0px 0px -8%", once = true } = options;
 
   useEffect(() => {
@@ -20,12 +21,14 @@ export function useScrollReveal<T extends HTMLElement>(options: ScrollRevealOpti
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion || typeof IntersectionObserver === "undefined") {
       element.classList.add("is-visible");
+      setIsVisible(true);
       return;
     }
 
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       element.classList.add("is-visible");
+      setIsVisible(true);
       if (once) observer.unobserve(element);
     }, { threshold, rootMargin });
 
@@ -33,7 +36,7 @@ export function useScrollReveal<T extends HTMLElement>(options: ScrollRevealOpti
     return () => observer.disconnect();
   }, [once, rootMargin, threshold]);
 
-  return { ref: elementRef, className: `motion-reveal motion-reveal--${direction}` };
+  return { ref: elementRef, className: `motion-reveal motion-reveal--${direction}`, isVisible };
 }
 
 export const motion = {

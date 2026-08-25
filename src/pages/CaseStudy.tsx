@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useParams, Link, Navigate } from "react-router";
 import { getProject } from "../data/projects";
+import { useScrollReveal } from "../animations";
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
 const ZEST   = "#DBF48C";
 const PURPLE = "#D98CF4";
 const OAT    = "#FEF8F0";
+const CARD_BG = "#2F174D";
+const CARD_BD = "#5A3C73";
 
 // ── Primitives ────────────────────────────────────────────────────────────────
 
@@ -153,6 +156,7 @@ function ProjectHero({ project }: { project: ReturnType<typeof getProject> }) {
       </div>
       <div style={{ padding: "64px var(--pad-x) 48px" }}>
         <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(52px, 9vw, 128px)", fontWeight: 700, color: project.heroText, letterSpacing: "-0.04em", lineHeight: 0.88, margin: "0 0 32px" }}>{project.fullTitle}</h1>
+        {project.hook && <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(22px, 3vw, 38px)", fontWeight: 700, color: project.heroText, letterSpacing: "-0.025em", lineHeight: 1.05, maxWidth: 760, margin: "0 0 24px" }}>{project.hook}</p>}
         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(15px, 1.4vw, 18px)", color: project.heroText, opacity: 0.75, lineHeight: 1.65, maxWidth: 600, margin: 0 }}>{project.intro}</p>
       </div>
       <div style={{ padding: "0 var(--pad-x)", borderTop: `2px solid ${onDark ? "rgba(254,248,240,0.2)" : INK}` }}>
@@ -504,6 +508,112 @@ function Learnings() {
   );
 }
 
+function OncoBotSurveyMetric({ label, value, detail }: { label: string; value: number; detail: string }) {
+  const reveal = useScrollReveal<HTMLDivElement>({ direction: "right", threshold: 0.1 });
+  return (
+    <div style={{ border: `1.5px solid ${CARD_BD}`, borderRadius: 4, backgroundColor: CARD_BG, padding: "24px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "baseline", marginBottom: 14 }}>
+        <span style={{ color: OAT, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(15px, 1.4vw, 19px)", fontWeight: 700 }}>{label}</span>
+        <strong style={{ color: ZEST, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(28px, 3vw, 44px)", lineHeight: 1 }}>{value}%</strong>
+      </div>
+      <div style={{ backgroundColor: "rgba(254,248,240,0.12)", height: 12, overflow: "hidden", marginBottom: 14 }}>
+        <div ref={reveal.ref} className={`${reveal.className} oncobot-survey-bar${reveal.isVisible ? " is-visible" : ""}`} style={{ "--survey-value": `${value}%`, backgroundColor: ZEST, height: "100%" } as React.CSSProperties} />
+      </div>
+      <span style={{ color: OAT, fontFamily: "'Inter', sans-serif", fontSize: 12, lineHeight: 1.5, opacity: 0.65 }}>{detail}</span>
+    </div>
+  );
+}
+
+function OncoBotResearch() {
+  return (
+    <section style={{ backgroundColor: INK, borderBottom: `3px solid ${INK}` }}>
+      <SectionHeader num="03" title="INVESTIGAR ANTES DE DISEÑAR" color={OAT} labelBg={BLUE} labelColor={INK} />
+      <div style={{ padding: "0 var(--pad-x) 64px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0 80px", alignItems: "start" }} className="cs-two-col">
+          <div>
+            <p style={{ color: ZEST, fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", margin: "0 0 18px" }}>ENCUESTA · GOOGLE FORMS</p>
+            <p style={{ color: OAT, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 0.92, margin: 0 }}>7 PARTICIPANTES.<br />18 PREGUNTAS.</p>
+          </div>
+          <div>
+            <p style={{ color: OAT, fontFamily: "'Inter', sans-serif", fontSize: "clamp(15px, 1.3vw, 18px)", lineHeight: 1.65, margin: "0 0 24px", opacity: 0.78 }}>La encuesta buscó caracterizar demográficamente a potenciales usuarios y conocer sus condiciones de acceso digital.</p>
+            <div className="motion-stagger is-visible" style={{ display: "grid", gap: 12 }}>
+              <OncoBotSurveyMetric label="Mujeres, madres o responsables legales" value={85} detail="85% de las personas encuestadas correspondía a este perfil." />
+              <OncoBotSurveyMetric label="Acceso a Wi‑Fi y redes sociales" value={100} detail="El 100% indicó contar con ambas formas de acceso." />
+              <OncoBotSurveyMetric label="Acceso a red 4G" value={85} detail="El 85% señaló tener acceso a una red 4G." />
+            </div>
+          </div>
+        </div>
+
+        <div style={{ borderTop: "2px solid rgba(254,248,240,0.15)", marginTop: 64, paddingTop: 48 }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginBottom: 24 }}>
+            <div>
+              <p style={{ color: ZEST, fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", margin: "0 0 12px" }}>ENTREVISTAS · VIDEOLLAMADAS</p>
+              <h3 style={{ color: OAT, fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700, letterSpacing: "-0.03em", margin: 0 }}>2 VOCES PARA ENTENDER EL PROCESO.</h3>
+            </div>
+            <span style={{ color: OAT, fontFamily: "'Inter', sans-serif", fontSize: 13, opacity: 0.55 }}>10 preguntas por entrevista</span>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 16 }}>
+            {["FOTOGRAFÍA / CECILIA DÍAZ", "FOTOGRAFÍA / KAREN MUÑOZ"].map((label, index) => (
+              <div key={label} style={{ border: `1.5px solid ${CARD_BD}`, borderRadius: 4, backgroundColor: CARD_BG }}>
+                <ImagePlaceholder label={label} aspectRatio="4/3" bg={index === 0 ? PURPLE : BLUE} />
+                <div style={{ borderTop: `1.5px solid ${CARD_BD}`, padding: "20px 24px" }}>
+                  <p style={{ color: ZEST, fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", margin: "0 0 10px" }}>{index === 0 ? "CECILIA · 48 AÑOS · ASISTENTE SOCIAL" : "KAREN · 33 AÑOS · TERAPEUTA OCUPACIONAL"}</p>
+                  <p style={{ color: OAT, fontFamily: "'Inter', sans-serif", fontSize: 14, lineHeight: 1.6, margin: 0, opacity: 0.72 }}>Las entrevistas reflejaron la necesidad de orientación y apoyo para saber a quién preguntar y cómo comenzar.</p>
+                  <blockquote style={{ borderLeft: `3px solid ${ZEST}`, color: OAT, fontFamily: "'Inter', sans-serif", fontSize: 13, fontStyle: "italic", lineHeight: 1.55, margin: "18px 0 0", paddingLeft: 14, opacity: 0.55 }}>CITA DE ENTREVISTA · AGREGAR TESTIMONIO ORIGINAL</blockquote>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OncoBotCaseStudy({ project }: { project: ReturnType<typeof getProject> }) {
+  if (!project) return null;
+  const section = (num: string, title: string, children: React.ReactNode, color = OAT, labelBg?: string, labelColor?: string) => (
+    <section style={{ backgroundColor: color, borderBottom: `3px solid ${INK}` }}>
+      <SectionHeader num={num} title={title} color={color === INK ? OAT : INK} labelBg={labelBg} labelColor={labelColor} />
+      <div style={{ padding: "0 var(--pad-x) 64px", color: color === INK ? OAT : INK }}>{children}</div>
+    </section>
+  );
+  const cards = (items: string[], cardColor = "transparent") => {
+    const darkCards = cardColor === INK;
+    const backgroundColor = darkCards ? CARD_BG : cardColor;
+    const borderColor = darkCards ? CARD_BD : INK;
+    const textColor = darkCards ? OAT : INK;
+    return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: 16 }}>
+      {items.map((item, index) => <div key={item} style={{ border: `1.5px solid ${borderColor}`, borderRadius: 4, padding: "28px", backgroundColor, color: textColor }}><span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 700, color: darkCards ? ZEST : INK, opacity: 0.7 }}>0{index + 1}</span><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(16px, 1.5vw, 22px)", fontWeight: 700, color: textColor, lineHeight: 1.2, margin: "18px 0 0" }}>{item}</p></div>)}
+    </div>
+    );
+  };
+  const note = (text: string, height: number) => (
+    <div style={{ backgroundColor: CARD_BG, border: `1.5px solid ${CARD_BD}`, borderRadius: 4, padding: "20px 24px", minHeight: height, display: "flex", alignItems: "center" }}>
+      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: OAT, opacity: 0.7, lineHeight: 1.6 }}>{text}</span>
+    </div>
+  );
+
+  return <>
+    {section("01", "CUANDO TODA LA INFORMACIÓN IMPORTA", <div className="cs-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0 80px" }}><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(22px, 2.5vw, 32px)", margin: 0 }}>ATENCIÓN ONCOLÓGICA INFANTIL</h3><div><p style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, lineHeight: 1.7, margin: "0 0 20px" }}>OncoBot aborda las necesidades de pacientes oncológicos infantiles y sus tutores, reuniendo información clínica y apoyo en una misma experiencia.</p>{note("Proyecto desarrollado durante un Diplomado UX Design.", 80)}</div></div>, OAT, INK, OAT)}
+    {section("02", "EL PROBLEMA", <><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 4vw, 52px)", fontWeight: 700, color: OAT, lineHeight: 0.95, maxWidth: 900, margin: "0 0 40px" }}>Reducir el tiempo de espera y facilitar la atención en una emergencia vital.</p>{cards(["Falta de una ficha clínica portátil y accesible.", "Necesidad de asesoría y contención ante una urgencia.", "Falta de priorización en la atención médica."], INK)}</>, INK, OAT, ZEST, INK)}
+    <OncoBotResearch />
+    {section("04", "ENTENDER A QUIENES CUIDAN", <><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(22px, 2.5vw, 32px)", margin: "0 0 32px" }}>DOS PROTOPERSONAS, UNA NECESIDAD COMPARTIDA.</h3>{cards(["Cecilia Díaz, 48 años, asistente social: busca una guía y fuente fidedigna.", "Karen Muñoz, 33 años, terapeuta ocupacional: espera agilizar los procesos clínicos.", "Ambas valoran orientación, apoyo y facilidad para la atención."])}</>, OAT)}
+    {section("05", "MAPEAR LA EXPERIENCIA", <div className="cs-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0 80px" }}><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 28, margin: 0 }}>CUSTOMER JOURNEY</h3><div><ImagePlaceholder label="CUSTOMER JOURNEY -- ADD ORIGINAL MAP" aspectRatio="16/7" bg={PURPLE} /><p style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.6, margin: "24px 0 0" }}>Se observaron dificultades en onboarding, iconos, ayuda inmediata, importación de proveedores e informes.</p></div></div>, OAT)}
+    {section("06", "APRENDER DEL ECOSISTEMA", <><p style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, lineHeight: 1.7, maxWidth: 720, margin: "0 0 32px" }}>El benchmark revisó Hello Doctor, BELONG, Cancer.net, CLC Móvil, My Cancer Tracker y MEDS.</p>{cards(["Interfaces simples e intuitivas.", "Información acotada y jerarquía clara.", "Acceso rápido a medicamentos, citas, informes y ayuda."])}</>, BLUE)}
+    {section("07", "ORDENAR LA EXPERIENCIA", <><ImagePlaceholder label="SITEMAP -- PERFIL, FICHA CLÍNICA, TRATAMIENTO, SOS Y CITAS" aspectRatio="16/7" bg={PURPLE} /><p style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.6, margin: "24px 0 0" }}>La arquitectura reúne perfil, datos del tutor, ficha clínica, medicamentos, recetas, exámenes, tratamiento, equipo médico y citas.</p></>, OAT)}
+    {section("08", "DE LA IDEA A LA INTERFAZ", <><div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: 16 }}>{["PAPER PROTOTYPE", "WIREFRAMES", "MOCKUPS", "PROTOTIPO FINAL EN FIGMA"].map((label) => <ImagePlaceholder key={label} label={label} aspectRatio="4/3" bg={PURPLE} />)}</div>{note("El flujo de activación de emergencia necesitó mayor claridad respecto de sus etapas.", 80)}</>, PURPLE)}
+    {section("09", "DISEÑAR TAMBIÉN PARA LA URGENCIA", <><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(28px, 5vw, 68px)", fontWeight: 700, lineHeight: 0.9, maxWidth: 900, margin: "0 0 40px" }}>SOS: SOLICITAR AYUDA, CONFIRMAR UBICACIÓN, ELEGIR CLÍNICA Y COMPARTIR FICHA.</p><ImagePlaceholder label="SOS USER FLOW -- ADD ORIGINAL FLOW" aspectRatio="16/7" bg={ZEST} /></>, INK, PURPLE, INK)}
+    {section("10", "CONSTRUIR UN LENGUAJE VISUAL", <><div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 32 }}>{["#590696", "#A85DF9", "#B8A1DC", "#37E2D5", "#4C7CE5", "#C70A80", "#EE82B3", "#FAF5FF"].map((color) => <span key={color} style={{ backgroundColor: color, border: `2px solid ${INK}`, width: 82, height: 58, padding: 8, fontFamily: "'Inter', sans-serif", fontSize: 10 }}>{color}</span>)}</div><p style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.6, margin: 0 }}>La guía de estilo definió Sora como tipografía y un moodboard basado en cuidado, protección, calma, organización y seriedad.</p></>, OAT)}
+    {section("11", "PROBAR, APRENDER E ITERAR", <>{cards(["Test heurístico: claridad de ayuda y navegación.", "Mejoras: contraste, textos, iconos, encabezados y barra de avance.", "Test de usabilidad: registro, edición de paciente e interacción con SOS.", "Se agregó la opción de añadir más pacientes."])}</>, BLUE)}
+    {section("12", "TEST A/B Y MAPAS DE CALOR", <>{cards(["Test A/B: 66,7% prefirió la opción A y 33,3% la opción B.", "73% de 15 indicó que completar la información fue fácil.", "3 personas hicieron clic en el lugar correcto de esa tarea.", "67% de 15 seleccionó correctamente compartir la ficha."])}</>, OAT)}
+    {section("13", "RESULTADO Y APRENDIZAJES", <><ImagePlaceholder label="PROTOTIPO FINAL MODELADO EN FIGMA" aspectRatio="16/7" bg={PURPLE} /><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(26px, 4vw, 56px)", fontWeight: 700, lineHeight: 0.92, margin: "40px 0 0" }}>VALIDAR CON USUARIOS ES PARTE DEL DISEÑO.</p></>, PURPLE)}
+    {section("14", "FUNCIONALIDADES CLAVE", <>{cards(["Ficha clínica centralizada.", "Medicamentos, recetas, exámenes y tratamiento.", "Compartir ficha clínica.", "SOS con ubicación, centro preferido y ficha.", "Agregar pacientes como mejora del test."])}</>, INK, PURPLE, INK)}
+    <NextProject slug={project.nextSlug} title={project.nextTitle} />
+  </>;
+}
+
 function NextProject({ slug, title }: { slug: string; title: string }) {
   const [hov, setHov] = useState(false);
   return (
@@ -531,6 +641,10 @@ export default function CaseStudy() {
   const project = getProject(slug ?? "");
 
   if (!project) return <Navigate to="/" replace />;
+
+  if (project.slug === "venture-predictor") {
+    return <div style={{ backgroundColor: OAT }}><CaseNav project={project} /><ProjectHero project={project} /><OncoBotCaseStudy project={project} /></div>;
+  }
 
   return (
     <div style={{ backgroundColor: OAT }}>

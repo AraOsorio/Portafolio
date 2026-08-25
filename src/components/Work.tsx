@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import { useScrollReveal } from "../animations";
 import miraImage01 from "../assets/mirahome/ChatGPT Image 25 ago 2026, 10_45_17.png";
@@ -154,23 +154,7 @@ interface VisualProps { bg: string; fg: string; accent: string; mockup: string; 
 function VisualBox({ bg, fg, accent, mockup, hov, year, images = EMPTY_IMAGES }: VisualProps) {
   const M = { phone: MockupPhone, dashboard: MockupDashboard, cards: MockupCards, report: MockupReport }[mockup]!;
   const slides = images.slice(0, 3);
-  const slideCount = Math.max(slides.length, 1);
-  const [activeIndex, setActiveIndex] = useState(0);
   const visualReveal = useScrollReveal<HTMLDivElement>({ direction: "none", threshold: 0.05 });
-
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [images]);
-
-  useEffect(() => {
-    if (slides.length < 2 || hov) return;
-    const timer = window.setInterval(() => {
-      setActiveIndex((index) => (index + 1) % slides.length);
-    }, 4000);
-    return () => window.clearInterval(timer);
-  }, [hov, slides.length]);
-
-  const goToSlide = (index: number) => setActiveIndex((index + slides.length) % slides.length);
 
   return (
     <div style={{
@@ -186,25 +170,22 @@ function VisualBox({ bg, fg, accent, mockup, hov, year, images = EMPTY_IMAGES }:
       transform: hov ? "scale(1.012)" : "scale(1)",
     }}>
       <div ref={visualReveal.ref} className={visualReveal.className.replace("motion-reveal", "motion-image-reveal")} style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}>
-        <div style={{ display: "flex", height: "100%", transform: `translateX(-${activeIndex * (100 / slideCount)}%)`, transition: "transform 0.55s ease", width: `${slideCount * 100}%` }}>
-          {slides.length > 0 ? slides.map((src) => (
-            <img key={src} src={src} alt="" style={{ width: `${100 / slides.length}%`, height: "100%", objectFit: "cover", flexShrink: 0 }} />
-          )) : (
+        {slides.length > 1 ? (
+          <div className="work-carousel-track" style={{ animationPlayState: "running", width: `${slides.length * 2 * 100}%` }}>
+            {[0, 1].flatMap((copy) => slides.map((src, index) => (
+              <img key={`${copy}-${src}`} src={src} alt="" style={{ width: `${100 / (slides.length * 2)}%`, height: "100%", objectFit: "cover", flexShrink: 0 }} />
+            )))}
+          </div>
+        ) : (
+          <div style={{ display: "flex", height: "100%", width: "100%" }}>
+            {slides.length === 1 ? (
+              <img src={slides[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ) : (
             <div className="proj-visual" style={{ width: "100%", maxWidth: 520, opacity: 0.9, flexShrink: 0, margin: "auto" }}>
               <M fg={fg} accent={accent} />
             </div>
-          )}
-        </div>
-        {slides.length > 1 && (
-          <>
-            <div style={{ position: "absolute", bottom: 14, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 6, zIndex: 2 }}>
-              {slides.map((src, index) => (
-                <button key={src} type="button" aria-label={`Show image ${index + 1}`} onClick={() => goToSlide(index)} style={{ width: 7, height: 7, padding: 0, border: `1px solid ${fg}`, backgroundColor: index === activeIndex ? fg : "transparent", cursor: "pointer" }} />
-              ))}
-            </div>
-            <button type="button" aria-label="Previous image" onClick={() => goToSlide(activeIndex - 1)} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", border: `1px solid ${fg}`, backgroundColor: bg, color: fg, cursor: "pointer", width: 28, height: 28, padding: 0, zIndex: 2 }}>←</button>
-            <button type="button" aria-label="Next image" onClick={() => goToSlide(activeIndex + 1)} style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", border: `1px solid ${fg}`, backgroundColor: bg, color: fg, cursor: "pointer", width: 28, height: 28, padding: 0, zIndex: 2 }}>→</button>
-          </>
+            )}
+          </div>
         )}
       </div>
       <span style={{
@@ -436,9 +417,9 @@ const PROJECTS: ProjData[] = [
     textColor: INK, accentColor: ZEST, mockup: "phone", slug: "mira-app",
   },
   {
-    num: "02", title: ["VENTURE", "PREDICTOR"], tags: ["PRODUCT DESIGN", "AI"], category: "ux-ui",
-    hook: "¿Cómo convertir datos complejos en decisiones que realmente ayuden a emprender?",
-    description: "AI-powered product designed to support early-stage startups in evaluating market fit. Led UX strategy, interaction design, and design system creation.",
+    num: "02", title: ["ONCOBOT"], tags: ["UX/UI", "UX RESEARCH", "PRODUCT DESIGN"], category: "ux-ui",
+    hook: "¿Y si pudieras tener toda la información del paciente al instante, desde un solo lugar?",
+    description: "Proyecto UX/UI para centralizar la información de pacientes oncológicos infantiles y facilitar la orientación de sus tutores durante la atención médica.",
     year: "2025", sectionBg: PURPLE, visualBg: "#c270e0",
     textColor: INK, accentColor: BLUE, mockup: "dashboard", slug: "venture-predictor",
   },
