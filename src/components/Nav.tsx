@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const LINKS = ["WORK", "ABOUT", "EXPERIENCE", "CONTACT"] as const;
+const LINKS = ["TRABAJOS", "ACERCA DE MI", "EXPERIENCIA", "HABLEMOS:)"] as const;
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
@@ -34,7 +34,7 @@ export default function Nav() {
       >
         <div className="nav-inner">
           <a href="#top" className="nav-logo">
-            ARA.OSORIO
+            ARA OSORIO REYES
           </a>
 
           <ul className="nav-links">

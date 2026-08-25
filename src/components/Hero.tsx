@@ -7,7 +7,7 @@ const ZEST   = "#DBF48C";
 const PURPLE = "#D98CF4";
 const OAT    = "#FEF8F0";
 
-const TITLES = ["PRODUCT DESIGNER", "UX/UI DESIGNER", "CREATIVE DEVELOPER"];
+const TITLES = ["PRODUCT DESIGNER", "UX/UI DESIGNER", "COMUNICACIÓN VISUAL", "DISEÑADORA GRÁFICA", "FRONTEND DEVELOPER"];
 
 export default function Hero() {
   const [idx, setIdx] = useState(0);
@@ -47,13 +47,13 @@ export default function Hero() {
 
       <div style={{ height: 72, flexShrink: 0 }} />
       <div ref={contentReveal.ref} className={`hero-wrap ${contentReveal.className}`}>
-        <div style={{ marginBottom: 16 }}><span className="tag" style={{ backgroundColor: INK, color: OAT, borderColor: INK }}>BASED IN CHILE · 2026</span></div>
+        <div style={{ marginBottom: 16 }}><span className="tag" style={{ backgroundColor: INK, color: OAT, borderColor: INK }}>CHILE · 2026</span></div>
         <h1 className="hero-headline">DISEÑO PARA HACER LAS COSAS MÁS HUMANAS.</h1>
         <div style={{ position: "relative", lineHeight: 1 }}><h2 className="hero-name" style={{ position: "relative", zIndex: 1 }}>ARACELLI OSORIO</h2></div>
         <div className="hero-footer motion-stagger is-visible">
           <div className="hero-badge" style={{ backgroundColor: PURPLE, border: `2px solid ${INK}`, boxShadow: `5px 5px 0 ${INK}` }}><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "clamp(10px, 1.1vw, 12px)", letterSpacing: "0.14em", color: INK, margin: 0, opacity: fading ? 0 : 1, transition: "opacity 0.28s ease", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{TITLES[idx]}</p></div>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.3vw, 17px)", color: INK, lineHeight: 1.65, margin: 0, opacity: 0.68 }}>Designing digital experiences where people, technology and creativity meet.</p>
-          <a href="#work" className="btn-primary motion-press">VIEW MY WORK →</a>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.3vw, 17px)", color: INK, lineHeight: 1.65, margin: 0, opacity: 0.68 }}>Diseño experiencias digitales donde las personas, la tecnología y la creatividad se encuentran.</p>
+          <a href="#work" className="btn-primary motion-press">Revisa mi trabajo →</a>
         </div>
       </div>
       <div style={{ height: 3, backgroundColor: INK, flexShrink: 0 }} />
