@@ -175,6 +175,7 @@ function VisualBox({ bg, fg, accent, mockup, hov, year }: VisualProps) {
 
 interface ProjData {
   num: string; title: string[]; tags: string[];
+  category: "ux-ui" | "graphic-design";
   hook: string;
   description: string; year: string;
   sectionBg: string; visualBg: string;
@@ -238,6 +239,12 @@ function CTA({ hov, to = "/" }: { hov: boolean; to?: string }) {
   );
 }
 
+function projectPath(project: ProjData) {
+  return project.category === "graphic-design"
+    ? `/graphic-projects/${project.slug}`
+    : `/works/${project.slug}`;
+}
+
 // ── Project 01: visual LEFT, info RIGHT (Soft Blue) ──────────────────────────
 
 function Project01({ p }: { p: ProjData }) {
@@ -248,7 +255,7 @@ function Project01({ p }: { p: ProjData }) {
       style={{ backgroundColor: p.sectionBg, borderBottom: `3px solid ${INK}` }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.2)` }}>
-        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.4 }}>{p.num} / 04</span>
+        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.4 }}>{p.num} / 06</span>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{p.tags.map((t) => <ProjTag key={t} label={t} textColor={INK} borderAlpha={0.5} />)}</div>
       </div>
 
@@ -259,12 +266,12 @@ function Project01({ p }: { p: ProjData }) {
         <div className="proj-info proj-info--r">
           <div>
             <ProjHook text={p.hook} textColor={INK} />
-            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(40px, 5.5vw, 96px)", fontWeight: 700, color: INK, letterSpacing: "-0.04em", lineHeight: 0.88, margin: "0 0 28px" }}>
+            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(40px, 5.5vw, 50px)", fontWeight: 700, color: INK, letterSpacing: "-0.04em", lineHeight: 0.88, margin: "0 0 28px" }}>
               {p.title.map((l, i) => <span key={i} style={{ display: "block" }}>{l}</span>)}
             </h3>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: 0 }}>{p.description}</p>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: "0 0 28px" }}>{p.description}</p>
           </div>
-          <CTA hov={hov} to={`/works/${p.slug}`} />
+          <CTA hov={hov} to={projectPath(p)} />
         </div>
       </div>
     </article>
@@ -281,7 +288,7 @@ function Project02({ p }: { p: ProjData }) {
       style={{ backgroundColor: p.sectionBg, borderBottom: `3px solid ${INK}` }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.2)` }}>
-        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.4 }}>{p.num} / 04</span>
+        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.4 }}>{p.num} / 06</span>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{p.tags.map((t) => <ProjTag key={t} label={t} textColor={INK} borderAlpha={0.5} />)}</div>
       </div>
 
@@ -289,12 +296,12 @@ function Project02({ p }: { p: ProjData }) {
         <div className="proj-info proj-info--l" style={{ borderRight: `2px solid rgba(35,0,63,0.2)` }}>
           <div>
             <ProjHook text={p.hook} textColor={INK} />
-            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(40px, 5.5vw, 96px)", fontWeight: 700, color: INK, letterSpacing: "-0.04em", lineHeight: 0.88, margin: "0 0 28px" }}>
+            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(40px, 5.5vw, 50px)", fontWeight: 700, color: INK, letterSpacing: "-0.04em", lineHeight: 0.88, margin: "0 0 28px" }}>
               {p.title.map((l, i) => <span key={i} style={{ display: "block" }}>{l}</span>)}
             </h3>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: 0 }}>{p.description}</p>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: "0 0 28px" }}>{p.description}</p>
           </div>
-          <CTA hov={hov} to={`/works/${p.slug}`} />
+          <CTA hov={hov} to={projectPath(p)} />
         </div>
         <div className="proj-visual-col">
           <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} />
@@ -314,7 +321,7 @@ function Project03({ p }: { p: ProjData }) {
       style={{ backgroundColor: p.sectionBg, borderBottom: `3px solid ${INK}` }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.2)` }}>
-        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.4 }}>{p.num} / 04</span>
+        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.4 }}>{p.num} / 06</span>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{p.tags.map((t) => <ProjTag key={t} label={t} textColor={INK} borderAlpha={0.5} />)}</div>
       </div>
 
@@ -324,11 +331,11 @@ function Project03({ p }: { p: ProjData }) {
 
       <div className="proj03-info">
         <ProjHook text={p.hook} textColor={INK} />
-        <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(36px, 5vw, 80px)", fontWeight: 700, color: INK, letterSpacing: "-0.04em", lineHeight: 0.9, margin: 0 }}>
+        <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(36px, 5vw, 50px)", fontWeight: 700, color: INK, letterSpacing: "-0.04em", lineHeight: 0.9, margin: 0 }}>
           {p.title.map((l, i) => <span key={i} style={{ display: "block" }}>{l}</span>)}
         </h3>
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: 0 }}>{p.description}</p>
-        <CTA hov={hov} to={`/works/${p.slug}`} />
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: "0 0 28px" }}>{p.description}</p>
+        <CTA hov={hov} to={projectPath(p)} />
       </div>
     </article>
   );
@@ -344,7 +351,7 @@ function Project04({ p }: { p: ProjData }) {
       style={{ backgroundColor: p.sectionBg }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.15)` }}>
-        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.35 }}>{p.num} / 04</span>
+        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.35 }}>{p.num} / 06</span>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{p.tags.map((t) => <ProjTag key={t} label={t} textColor={INK} borderAlpha={0.35} />)}</div>
       </div>
 
@@ -365,7 +372,7 @@ function Project04({ p }: { p: ProjData }) {
             <ProjHook text={p.hook} textColor={INK} />
             <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: 0 }}>{p.description}</p>
           </div>
-          <CTA hov={hov} to={`/works/${p.slug}`} />
+          <CTA hov={hov} to={projectPath(p)} />
         </div>
       </div>
     </article>
@@ -376,57 +383,95 @@ function Project04({ p }: { p: ProjData }) {
 
 const PROJECTS: ProjData[] = [
   {
-    num: "01", title: ["MIRA", "APP"], tags: ["UX/UI", "PRODUCT DESIGN"],
+    num: "01", title: ["¿Puede la IA acompañar nuestras emociones sin decirnos qué sentir?"], tags: ["UX/UI", "PRODUCT DESIGN"], category: "ux-ui",
     hook: "¿Puede la IA acompañar nuestras emociones sin decirnos qué sentir?",
-    description: "End-to-end design of a mobile application, from initial user research through interaction design, visual design system, and developer handoff.",
+    description: "Una app de bienestar mental con IA que transforma el autocuidado en una experiencia más humana, accesible y personalizada.",
     year: "2025", sectionBg: BLUE, visualBg: "#6e8de0",
     textColor: INK, accentColor: ZEST, mockup: "phone", slug: "mira-app",
   },
   {
-    num: "02", title: ["VENTURE", "PREDICTOR"], tags: ["PRODUCT DESIGN", "AI"],
+    num: "02", title: ["VENTURE", "PREDICTOR"], tags: ["PRODUCT DESIGN", "AI"], category: "ux-ui",
     hook: "¿Cómo convertir datos complejos en decisiones que realmente ayuden a emprender?",
     description: "AI-powered product designed to support early-stage startups in evaluating market fit. Led UX strategy, interaction design, and design system creation.",
     year: "2025", sectionBg: PURPLE, visualBg: "#c270e0",
     textColor: INK, accentColor: BLUE, mockup: "dashboard", slug: "venture-predictor",
   },
   {
-    num: "03", title: ["PROJECT", "BUILDER"], tags: ["UX/UI", "PRODUCT DESIGN"],
+    num: "03", title: ["PROJECT", "BUILDER"], tags: ["UX/UI", "PRODUCT DESIGN"], category: "ux-ui",
     hook: "¿Cómo reducir la fricción entre equipos sin añadir otra herramienta más?",
     description: "Collaborative project management tool designed to reduce cross-functional friction. Research-led design with extensive usability testing.",
     year: "2024", sectionBg: ZEST, visualBg: "#b8d06a",
     textColor: INK, accentColor: PURPLE, mockup: "cards", slug: "project-builder",
   },
   {
-    num: "04", title: ["RENDI-", "CIONES"], tags: ["UX RESEARCH", "PRODUCT DESIGN"],
+    num: "04", title: ["RENDI-", "CIONES"], tags: ["UX RESEARCH", "PRODUCT DESIGN"], category: "ux-ui",
     hook: "¿Cómo transformar un proceso administrativo complejo en una experiencia que la gente quiera usar?",
     description: "Financial reporting product redesigned from the ground up based on in-depth user research. Simplified a complex administrative flow into a clear, intuitive experience.",
     year: "2024", sectionBg: OAT, visualBg: "#e8e0d5",
     textColor: INK, accentColor: BLUE, mockup: "report", slug: "rendiciones",
+  },
+  {
+    num: "05", title: ["IDENTIDAD", "VISUAL"], tags: ["BRANDING", "ART DIRECTION"], category: "graphic-design",
+    hook: "¿Cómo hacer visible la personalidad de una marca desde el primer contacto?",
+    description: "Sistema de identidad visual para una marca emergente, desde la exploración conceptual hasta sus principales aplicaciones gráficas.",
+    year: "2025", sectionBg: PURPLE, visualBg: "#c270e0",
+    textColor: INK, accentColor: ZEST, mockup: "cards", slug: "identidad-visual",
+  },
+  {
+    num: "06", title: ["EDITORIAL", "& DIRECCIÓN", "DE ARTE"], tags: ["EDITORIAL", "DIRECCIÓN DE ARTE"], category: "graphic-design",
+    hook: "¿Cómo convertir una idea editorial en un sistema visual que invite a detenerse?",
+    description: "Dirección de arte y diseño editorial para una publicación cultural, con una composición que equilibra ritmo, contenido y expresión visual.",
+    year: "2025", sectionBg: ZEST, visualBg: "#b8d06a",
+    textColor: INK, accentColor: PURPLE, mockup: "report", slug: "editorial-direccion-de-arte",
   },
 ];
 
 // ── Section ───────────────────────────────────────────────────────────────────
 
 export default function Work() {
-  const [p1, p2, p3, p4] = PROJECTS;
+  const [filter, setFilter] = useState<"all" | ProjData["category"]>("all");
+  const visibleProjects = filter === "all" ? PROJECTS : PROJECTS.filter((project) => project.category === filter);
+
   return (
     <section id="work" style={{ borderTop: `3px solid ${INK}` }}>
       {/* Header */}
       <div style={{ backgroundColor: OAT, borderBottom: `3px solid ${INK}` }}>
         <div className="proj-section-header">
-          <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 3vw, 48px)", fontWeight: 700, color: INK, letterSpacing: "-0.03em", margin: 0, lineHeight: 1 }}>
-            SELECTED WORK
-          </h2>
+          <div>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 3vw, 48px)", fontWeight: 700, color: INK, letterSpacing: "-0.03em", margin: 0, lineHeight: 1 }}>
+              SELECTED WORK
+            </h2>
+            <div className="work-filters" role="group" aria-label="Filter projects by category">
+              {([
+                ["all", "ALL"],
+                ["ux-ui", "UX/UI & PRODUCT"],
+                ["graphic-design", "DISEÑO GRÁFICO"],
+              ] as const).map(([value, label]) => (
+                <button
+                  key={value}
+                  type="button"
+                  className={`work-filter${filter === value ? " is-active" : ""}`}
+                  onClick={() => setFilter(value)}
+                  aria-pressed={filter === value}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
           <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 10, fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: "0.12em", border: `2px solid ${INK}`, padding: "4px 10px", backgroundColor: ZEST, color: INK, whiteSpace: "nowrap" }}>
-            4 CASE STUDIES — 2024/2025
+            6 CASE STUDIES — 2024/2025
           </span>
         </div>
       </div>
 
-      <Project01 p={p1} />
-      <Project02 p={p2} />
-      <Project03 p={p3} />
-      <Project04 p={p4} />
+      {visibleProjects.map((project) => {
+        if (project.num === "01") return <Project01 key={project.slug} p={project} />;
+        if (project.num === "02") return <Project02 key={project.slug} p={project} />;
+        if (project.num === "03") return <Project03 key={project.slug} p={project} />;
+        if (project.num === "04") return <Project04 key={project.slug} p={project} />;
+        return <Project01 key={project.slug} p={project} />;
+      })}
     </section>
   );
 }

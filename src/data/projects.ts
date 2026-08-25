@@ -1,6 +1,7 @@
 export interface ProjectMeta {
   slug: string;
   num: string;
+  category: "ux-ui" | "graphic-design";
   fullTitle: string;
   tags: string[];
   intro: string;
@@ -23,9 +24,10 @@ export const PROJECTS: ProjectMeta[] = [
   {
     slug: "mira-app",
     num: "01",
+    category: "ux-ui",
     fullTitle: "MIRA APP",
     tags: ["UX/UI", "PRODUCT DESIGN"],
-    intro: "End-to-end design of a mobile application — from initial research through interaction design, visual design system, and developer handoff.",
+    intro: "Una app de bienestar mental con IA que transforma el autocuidado en una experiencia más humana, accesible y personalizada.",
     year: "2025",
     heroBg: BLUE,
     heroText: INK,
@@ -37,6 +39,7 @@ export const PROJECTS: ProjectMeta[] = [
   {
     slug: "venture-predictor",
     num: "02",
+    category: "ux-ui",
     fullTitle: "VENTURE PREDICTOR",
     tags: ["PRODUCT DESIGN", "AI"],
     intro: "An AI-powered platform designed to help early-stage startups evaluate market fit. Led UX strategy, interaction design, and design system creation.",
@@ -51,6 +54,7 @@ export const PROJECTS: ProjectMeta[] = [
   {
     slug: "project-builder",
     num: "03",
+    category: "ux-ui",
     fullTitle: "PROJECT BUILDER",
     tags: ["UX/UI", "PRODUCT DESIGN"],
     intro: "A collaborative project management tool designed to reduce cross-functional friction. Research-led design with extensive usability testing.",
@@ -65,6 +69,7 @@ export const PROJECTS: ProjectMeta[] = [
   {
     slug: "rendiciones",
     num: "04",
+    category: "ux-ui",
     fullTitle: "RENDICIONES",
     tags: ["UX RESEARCH", "PRODUCT DESIGN"],
     intro: "A financial reporting product redesigned from the ground up based on in-depth user research. Simplified a complex administrative flow into a clear, intuitive experience.",
@@ -75,6 +80,36 @@ export const PROJECTS: ProjectMeta[] = [
     mockup: "report",
     nextSlug: "mira-app",
     nextTitle: "MIRA APP",
+  },
+  {
+    slug: "identidad-visual",
+    num: "05",
+    category: "graphic-design",
+    fullTitle: "IDENTIDAD VISUAL",
+    tags: ["BRANDING", "ART DIRECTION"],
+    intro: "Sistema de identidad visual para una marca emergente, desde la exploración conceptual hasta sus principales aplicaciones gráficas.",
+    year: "2025",
+    heroBg: PURPLE,
+    heroText: INK,
+    accentColor: ZEST,
+    mockup: "cards",
+    nextSlug: "editorial-direccion-de-arte",
+    nextTitle: "EDITORIAL & DIRECCIÓN DE ARTE",
+  },
+  {
+    slug: "editorial-direccion-de-arte",
+    num: "06",
+    category: "graphic-design",
+    fullTitle: "EDITORIAL & DIRECCIÓN DE ARTE",
+    tags: ["EDITORIAL", "DIRECCIÓN DE ARTE"],
+    intro: "Dirección de arte y diseño editorial para una publicación cultural, con una composición que equilibra ritmo, contenido y expresión visual.",
+    year: "2025",
+    heroBg: ZEST,
+    heroText: INK,
+    accentColor: PURPLE,
+    mockup: "report",
+    nextSlug: "identidad-visual",
+    nextTitle: "IDENTIDAD VISUAL",
   },
 ];
 

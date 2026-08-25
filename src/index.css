@@ -234,6 +234,32 @@ body {
   gap: 16px;
 }
 
+.work-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.work-filter {
+  background: transparent;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 8px 12px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.work-filter:hover,
+.work-filter.is-active {
+  background-color: var(--ink);
+  color: var(--oat);
+}
+
 /* Number strip at top of each project */
 .proj-strip {
   padding: 18px var(--pad-x);
