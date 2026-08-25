@@ -570,6 +570,103 @@ function OncoBotResearch() {
   );
 }
 
+const ONCOBOT_BENCHMARK = [
+  {
+    name: "Hello Doctor",
+    works: "Asesoría y consulta por videollamada.",
+    problem: "Espaciado y alineación de elementos gráficos.",
+    learning: "Mantener una experiencia amigable y sencilla.",
+    detail: "2 pasos · Tono informal y técnico · Mensajes acotados · Velocidad rápida.",
+  },
+  {
+    name: "BELONG",
+    works: "Red de apoyo internacional con especialistas.",
+    problem: "Falta de claridad en la jerarquía y orden de los elementos.",
+    learning: "Organizar la información y priorizar las acciones clave.",
+    detail: "2 pasos · Tono formal y técnico · Mensajes acotados · Velocidad rápida.",
+  },
+  {
+    name: "Cancer.net",
+    works: "Registro de medicamentos, citas e informe de salud.",
+    problem: "Diseño anticuado y exceso de texto.",
+    learning: "Centralizar el tratamiento sin sobrecargar la interfaz.",
+    detail: "2 pasos · Tono formal y técnico · Velocidad rápida.",
+  },
+  {
+    name: "CLC Móvil",
+    works: "Botón de emergencia, citas médicas y perfil de usuario.",
+    problem: "Falta una sección de exámenes realizados.",
+    learning: "Facilitar el acceso directo a emergencia y datos clínicos.",
+    detail: "2 pasos · Tono formal y técnico · Mensajes acotados · Velocidad rápida.",
+  },
+  {
+    name: "My Cancer Tracker",
+    works: "Registro de diagnóstico, tratamiento y efectos secundarios.",
+    problem: "Sin presentación clara; solo en inglés y sin imagen corporativa.",
+    learning: "Usar una identidad clara y un ingreso de información simple.",
+    detail: "2 pasos · Tono directo y poco texto · Mensajes acotados · Velocidad rápida.",
+  },
+  {
+    name: "MEDS",
+    works: "Seguimiento del tratamiento médico.",
+    problem: "Demasiados espacios en blanco y falta de flujo de acciones.",
+    learning: "Conectar la información con acciones claras y consecutivas.",
+    detail: "2 pasos · Tono directo y técnico · Mensajes muy acotados · Velocidad rápida.",
+  },
+] as const;
+
+function OncoBotBenchmark() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const reveal = useScrollReveal<HTMLDivElement>({ direction: "up", threshold: 0.08 });
+  const active = ONCOBOT_BENCHMARK[activeIndex];
+  const points = [
+    ["Qué funciona", active.works],
+    ["Problema UX principal", active.problem],
+    ["Aprendizaje para OncoBot", active.learning],
+    ["Dato relevante", active.detail],
+  ];
+
+  return (
+    <section style={{ backgroundColor: BLUE, borderBottom: `3px solid ${INK}` }}>
+      <SectionHeader num="06" title="APRENDER DEL ECOSISTEMA" />
+      <div style={{ padding: "0 var(--pad-x) 64px" }}>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(15px, 1.4vw, 18px)", color: INK, opacity: 0.72, lineHeight: 1.75, maxWidth: 720, margin: "0 0 32px" }}>
+          Se analizaron seis aplicaciones para identificar patrones y oportunidades para OncoBot.
+        </p>
+        <div ref={reveal.ref} className={reveal.className}>
+          <div role="tablist" aria-label="Aplicaciones analizadas en el benchmark" style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 24 }}>
+            {ONCOBOT_BENCHMARK.map((item, index) => (
+              <button key={item.name} type="button" role="tab" aria-selected={activeIndex === index} onClick={() => setActiveIndex(index)} style={{ backgroundColor: activeIndex === index ? INK : OAT, border: `2px solid ${INK}`, color: activeIndex === index ? OAT : INK, cursor: "pointer", fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.04em", minHeight: 46, padding: "12px 16px" }}>
+                {item.name}
+              </button>
+            ))}
+          </div>
+          <div style={{ backgroundColor: OAT, border: `2px solid ${INK}`, boxShadow: `6px 6px 0 ${INK}`, padding: "clamp(24px, 4vw, 40px)" }}>
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 16, borderBottom: `2px solid ${INK}`, marginBottom: 28, paddingBottom: 20 }}>
+              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(30px, 4vw, 52px)", fontWeight: 700, color: INK, letterSpacing: "-0.04em", lineHeight: 0.9, margin: 0 }}>{active.name}</h3>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: INK, opacity: 0.55 }}>REFERENTE {activeIndex + 1} / 06</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: 24 }}>
+              {points.map(([label, value]) => (
+                <div key={label} style={{ borderTop: `2px solid ${INK}`, paddingTop: 14 }}>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", color: INK, opacity: 0.42, margin: "0 0 10px", textTransform: "uppercase" }}>{label}</p>
+                  <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(16px, 1.5vw, 21px)", fontWeight: 600, color: INK, lineHeight: 1.25, margin: 0 }}>{value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div style={{ backgroundColor: INK, color: OAT, border: `2px solid ${INK}`, marginTop: 40, padding: "28px" }}>
+          <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", color: ZEST, margin: "0 0 18px", textTransform: "uppercase" }}>Patrones y oportunidades para OncoBot</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: 20 }}>
+            {["Acceso rápido a información clave.", "Jerarquía y acciones fáciles de entender.", "Mensajes breves, directos y técnicos cuando corresponde.", "Integrar emergencia, tratamiento, citas y ficha clínica."].map((item, index) => <p key={item} style={{ borderTop: `2px solid ${index % 2 === 0 ? ZEST : BLUE}`, paddingTop: 14, fontFamily: "'Inter', sans-serif", fontSize: 14, lineHeight: 1.6, margin: 0, color: OAT, opacity: 0.82 }}>{item}</p>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function OncoBotCaseStudy({ project }: { project: ReturnType<typeof getProject> }) {
   if (!project) return null;
   const section = (num: string, title: string, children: React.ReactNode, color = OAT, labelBg?: string, labelColor?: string) => (
@@ -601,7 +698,7 @@ function OncoBotCaseStudy({ project }: { project: ReturnType<typeof getProject> 
     <OncoBotResearch />
     {section("04", "ENTENDER A QUIENES CUIDAN", <><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(22px, 2.5vw, 32px)", margin: "0 0 32px" }}>DOS PROTOPERSONAS, UNA NECESIDAD COMPARTIDA.</h3>{cards(["Cecilia Díaz, 48 años, asistente social: busca una guía y fuente fidedigna.", "Karen Muñoz, 33 años, terapeuta ocupacional: espera agilizar los procesos clínicos.", "Ambas valoran orientación, apoyo y facilidad para la atención."])}</>, OAT)}
     {section("05", "MAPEAR LA EXPERIENCIA", <div className="cs-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0 80px" }}><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 28, margin: 0 }}>CUSTOMER JOURNEY</h3><div><ImagePlaceholder label="CUSTOMER JOURNEY -- ADD ORIGINAL MAP" aspectRatio="16/7" bg={PURPLE} /><p style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.6, margin: "24px 0 0" }}>Se observaron dificultades en onboarding, iconos, ayuda inmediata, importación de proveedores e informes.</p></div></div>, OAT)}
-    {section("06", "APRENDER DEL ECOSISTEMA", <><p style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, lineHeight: 1.7, maxWidth: 720, margin: "0 0 32px" }}>El benchmark revisó Hello Doctor, BELONG, Cancer.net, CLC Móvil, My Cancer Tracker y MEDS.</p>{cards(["Interfaces simples e intuitivas.", "Información acotada y jerarquía clara.", "Acceso rápido a medicamentos, citas, informes y ayuda."])}</>, BLUE)}
+    <OncoBotBenchmark />
     {section("07", "ORDENAR LA EXPERIENCIA", <><ImagePlaceholder label="SITEMAP -- PERFIL, FICHA CLÍNICA, TRATAMIENTO, SOS Y CITAS" aspectRatio="16/7" bg={PURPLE} /><p style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.6, margin: "24px 0 0" }}>La arquitectura reúne perfil, datos del tutor, ficha clínica, medicamentos, recetas, exámenes, tratamiento, equipo médico y citas.</p></>, OAT)}
     {section("08", "DE LA IDEA A LA INTERFAZ", <><div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: 16 }}>{["PAPER PROTOTYPE", "WIREFRAMES", "MOCKUPS", "PROTOTIPO FINAL EN FIGMA"].map((label) => <ImagePlaceholder key={label} label={label} aspectRatio="4/3" bg={PURPLE} />)}</div>{note("El flujo de activación de emergencia necesitó mayor claridad respecto de sus etapas.", 80)}</>, PURPLE)}
     {section("09", "DISEÑAR TAMBIÉN PARA LA URGENCIA", <><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(28px, 5vw, 68px)", fontWeight: 700, lineHeight: 0.9, maxWidth: 900, margin: "0 0 40px" }}>SOS: SOLICITAR AYUDA, CONFIRMAR UBICACIÓN, ELEGIR CLÍNICA Y COMPARTIR FICHA.</p><ImagePlaceholder label="SOS USER FLOW -- ADD ORIGINAL FLOW" aspectRatio="16/7" bg={ZEST} /></>, INK, PURPLE, INK)}

@@ -4,6 +4,7 @@ import CaseStudy from "./pages/CaseStudy";
 import MiraApp from "./pages/MiraApp";
 import GraphicProject from "./pages/GraphicProject";
 
+
 export const router = createBrowserRouter([
   {
     path: "/",
