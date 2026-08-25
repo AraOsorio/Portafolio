@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useScrollReveal } from "../animations";
+import miraImage01 from "../assets/mirahome/ChatGPT Image 25 ago 2026, 10_45_17.png";
+import miraImage02 from "../assets/mirahome/ChatGPT Image 25 ago 2026, 10_46_54.png";
+import miraImage03 from "../assets/mirahome/ChatGPT Image 25 ago 2026, 11_02_22.png";
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
@@ -8,6 +11,9 @@ const ZEST   = "#DBF48C";
 const PURPLE = "#D98CF4";
 const OAT    = "#FEF8F0";
 const EMPTY_IMAGES: string[] = [];
+const MIRA_IMAGE_01 = miraImage01;
+const MIRA_IMAGE_02 = miraImage02;
+const MIRA_IMAGE_03 = miraImage03;
 
 // ── SVG mockups ───────────────────────────────────────────────────────────────
 
@@ -148,6 +154,7 @@ interface VisualProps { bg: string; fg: string; accent: string; mockup: string; 
 function VisualBox({ bg, fg, accent, mockup, hov, year, images = EMPTY_IMAGES }: VisualProps) {
   const M = { phone: MockupPhone, dashboard: MockupDashboard, cards: MockupCards, report: MockupReport }[mockup]!;
   const slides = images.slice(0, 3);
+  const slideCount = Math.max(slides.length, 1);
   const [activeIndex, setActiveIndex] = useState(0);
   const visualReveal = useScrollReveal<HTMLDivElement>({ direction: "none", threshold: 0.05 });
 
@@ -179,7 +186,7 @@ function VisualBox({ bg, fg, accent, mockup, hov, year, images = EMPTY_IMAGES }:
       transform: hov ? "scale(1.012)" : "scale(1)",
     }}>
       <div ref={visualReveal.ref} className={visualReveal.className.replace("motion-reveal", "motion-image-reveal")} style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}>
-        <div style={{ display: "flex", height: "100%", transform: `translateX(-${activeIndex * 100}%)`, transition: "transform 0.55s ease", width: `${(slides.length || 1) * 100}%` }}>
+        <div style={{ display: "flex", height: "100%", transform: `translateX(-${activeIndex * (100 / slideCount)}%)`, transition: "transform 0.55s ease", width: `${slideCount * 100}%` }}>
           {slides.length > 0 ? slides.map((src) => (
             <img key={src} src={src} alt="" style={{ width: `${100 / slides.length}%`, height: "100%", objectFit: "cover", flexShrink: 0 }} />
           )) : (
@@ -300,7 +307,7 @@ function Project01({ p }: { p: ProjData }) {
 
       <div className="proj01-grid">
         <div style={{ borderRight: `2px solid rgba(35,0,63,0.2)` }} className="proj-visual-col">
-          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} images={p.images} />
+          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} images={p.images ?? EMPTY_IMAGES} />
         </div>
         <div className="proj-info proj-info--r">
           <div>
@@ -425,7 +432,7 @@ const PROJECTS: ProjData[] = [
     num: "01", title: ["¿Puede la IA acompañar nuestras emociones sin decirnos qué sentir?"], tags: ["UX/UI", "PRODUCT DESIGN"], category: "ux-ui",
     hook: "¿Puede la IA acompañar nuestras emociones sin decirnos qué sentir?",
     description: "Una app de bienestar mental con IA que transforma el autocuidado en una experiencia más humana, accesible y personalizada.",
-    year: "2025", sectionBg: BLUE, visualBg: "#6e8de0",
+    year: "2025", sectionBg: BLUE, visualBg: "#6e8de0", images: [MIRA_IMAGE_01, MIRA_IMAGE_02, MIRA_IMAGE_03],
     textColor: INK, accentColor: ZEST, mockup: "phone", slug: "mira-app",
   },
   {

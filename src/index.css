@@ -70,8 +70,7 @@ body {
    MOTION SYSTEM
 ═══════════════════════════════════════════ */
 .motion-reveal,
-.motion-fade,
-.motion-image-reveal {
+.motion-fade {
   opacity: 0;
   transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), clip-path 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -87,7 +86,8 @@ body {
   transform: none;
 }
 .motion-image-reveal {
-  clip-path: inset(0 100% 0 0);
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
 }
 .motion-image-reveal.is-visible {
   opacity: 1;
