@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useScrollReveal } from "../animations";
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
@@ -38,8 +39,10 @@ function DisciplineChip({ label, bg, text }: { label: string; bg: string; text: 
 }
 
 export default function About() {
+  const sectionReveal = useScrollReveal<HTMLElement>();
+  const contentReveal = useScrollReveal<HTMLDivElement>({ direction: "up", threshold: 0.08 });
   return (
-    <section id="about" style={{ backgroundColor: INK, borderTop: `3px solid ${INK}` }}>
+    <section id="about" ref={sectionReveal.ref} className={sectionReveal.className} style={{ backgroundColor: INK, borderTop: `3px solid ${INK}` }}>
       {/* Ticker — Yuzu Zest strip */}
       <div style={{ backgroundColor: ZEST, borderBottom: `2px solid ${INK}`, overflow: "hidden", whiteSpace: "nowrap", padding: "14px 0" }}>
         <div className="ticker-track">
@@ -52,7 +55,7 @@ export default function About() {
       </div>
 
       {/* Split */}
-      <div className="about-split">
+      <div ref={contentReveal.ref} className={`about-split ${contentReveal.className}`}>
         {/* Left */}
         <div className="about-left" style={{ borderRight: "2px solid rgba(254,248,240,0.14)" }}>
           <h2 style={{
@@ -70,11 +73,11 @@ export default function About() {
             I BUILD.
           </h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 40 }}>
+          <div className="motion-stagger is-visible" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 40 }}>
             {DISCIPLINES.map((d) => <DisciplineChip key={d.label} {...d} />)}
           </div>
 
-          <a href="#contact" className="btn-primary">LET'S TALK →</a>
+          <a href="#contact" className="btn-primary motion-press">LET'S TALK →</a>
         </div>
 
         {/* Right */}

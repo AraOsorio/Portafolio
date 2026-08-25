@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useScrollReveal } from "../animations";
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
@@ -80,8 +81,9 @@ function LinkRow({ item }: { item: (typeof LINKS)[0] }) {
 }
 
 export default function Contact() {
+  const sectionReveal = useScrollReveal<HTMLElement>();
   return (
-    <section id="contact" style={{ backgroundColor: INK, borderTop: `3px solid ${INK}` }}>
+    <section id="contact" ref={sectionReveal.ref} className={sectionReveal.className} style={{ backgroundColor: INK, borderTop: `3px solid ${INK}` }}>
       <div className="contact-inner">
         {/* Headline */}
         <div className="contact-headline">
@@ -105,7 +107,7 @@ export default function Contact() {
         </div>
 
         {/* Links */}
-        <div>
+        <div className="motion-stagger is-visible">
           {LINKS.map((l) => <LinkRow key={l.label} item={l} />)}
         </div>
 

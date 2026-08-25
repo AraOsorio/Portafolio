@@ -46,7 +46,7 @@ export default function Nav() {
           </ul>
 
           <button
-            className="nav-burger"
+            className="nav-burger motion-press"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}

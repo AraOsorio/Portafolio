@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useScrollReveal } from "../animations";
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
@@ -48,8 +49,9 @@ function Chip({ label, hoverBg, hoverText }: { label: string; hoverBg: string; h
 }
 
 export default function Skills() {
+  const sectionReveal = useScrollReveal<HTMLElement>();
   return (
-    <section style={{
+    <section ref={sectionReveal.ref} className={sectionReveal.className} style={{
       backgroundColor: OAT,
       borderTop: `3px solid ${INK}`,
       borderBottom: `3px solid ${INK}`,
@@ -73,10 +75,10 @@ export default function Skills() {
       </div>
 
       <div style={{ padding: "52px var(--pad-x) 60px", overflow: "hidden" }}>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+        <div className="motion-stagger is-visible" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
           {ROW1.map((s) => <Chip key={s.label} {...s} />)}
         </div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <div className="motion-stagger is-visible" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           {ROW2.map((s) => <Chip key={s.label} {...s} />)}
         </div>
       </div>

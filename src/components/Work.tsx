@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { useScrollReveal } from "../animations";
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
 const ZEST   = "#DBF48C";
 const PURPLE = "#D98CF4";
 const OAT    = "#FEF8F0";
+const EMPTY_IMAGES: string[] = [];
 
 // ── SVG mockups ───────────────────────────────────────────────────────────────
 
@@ -141,10 +143,28 @@ function MockupReport({ fg, accent }: { fg: string; accent: string }) {
 
 // ── Visual container ──────────────────────────────────────────────────────────
 
-interface VisualProps { bg: string; fg: string; accent: string; mockup: string; hov: boolean; year: string }
+interface VisualProps { bg: string; fg: string; accent: string; mockup: string; hov: boolean; year: string; images?: string[] }
 
-function VisualBox({ bg, fg, accent, mockup, hov, year }: VisualProps) {
+function VisualBox({ bg, fg, accent, mockup, hov, year, images = EMPTY_IMAGES }: VisualProps) {
   const M = { phone: MockupPhone, dashboard: MockupDashboard, cards: MockupCards, report: MockupReport }[mockup]!;
+  const slides = images.slice(0, 3);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const visualReveal = useScrollReveal<HTMLDivElement>({ direction: "none", threshold: 0.05 });
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [images]);
+
+  useEffect(() => {
+    if (slides.length < 2 || hov) return;
+    const timer = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % slides.length);
+    }, 4000);
+    return () => window.clearInterval(timer);
+  }, [hov, slides.length]);
+
+  const goToSlide = (index: number) => setActiveIndex((index + slides.length) % slides.length);
+
   return (
     <div style={{
       backgroundColor: bg,
@@ -158,8 +178,27 @@ function VisualBox({ bg, fg, accent, mockup, hov, year }: VisualProps) {
       transition: "transform 0.35s ease",
       transform: hov ? "scale(1.012)" : "scale(1)",
     }}>
-      <div className="proj-visual" style={{ width: "100%", maxWidth: 520, opacity: 0.9 }}>
-        <M fg={fg} accent={accent} />
+      <div ref={visualReveal.ref} className={visualReveal.className.replace("motion-reveal", "motion-image-reveal")} style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}>
+        <div style={{ display: "flex", height: "100%", transform: `translateX(-${activeIndex * 100}%)`, transition: "transform 0.55s ease", width: `${(slides.length || 1) * 100}%` }}>
+          {slides.length > 0 ? slides.map((src) => (
+            <img key={src} src={src} alt="" style={{ width: `${100 / slides.length}%`, height: "100%", objectFit: "cover", flexShrink: 0 }} />
+          )) : (
+            <div className="proj-visual" style={{ width: "100%", maxWidth: 520, opacity: 0.9, flexShrink: 0, margin: "auto" }}>
+              <M fg={fg} accent={accent} />
+            </div>
+          )}
+        </div>
+        {slides.length > 1 && (
+          <>
+            <div style={{ position: "absolute", bottom: 14, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 6, zIndex: 2 }}>
+              {slides.map((src, index) => (
+                <button key={src} type="button" aria-label={`Show image ${index + 1}`} onClick={() => goToSlide(index)} style={{ width: 7, height: 7, padding: 0, border: `1px solid ${fg}`, backgroundColor: index === activeIndex ? fg : "transparent", cursor: "pointer" }} />
+              ))}
+            </div>
+            <button type="button" aria-label="Previous image" onClick={() => goToSlide(activeIndex - 1)} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", border: `1px solid ${fg}`, backgroundColor: bg, color: fg, cursor: "pointer", width: 28, height: 28, padding: 0, zIndex: 2 }}>←</button>
+            <button type="button" aria-label="Next image" onClick={() => goToSlide(activeIndex + 1)} style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", border: `1px solid ${fg}`, backgroundColor: bg, color: fg, cursor: "pointer", width: 28, height: 28, padding: 0, zIndex: 2 }}>→</button>
+          </>
+        )}
       </div>
       <span style={{
         position: "absolute", top: 14, right: 18,
@@ -180,7 +219,7 @@ interface ProjData {
   description: string; year: string;
   sectionBg: string; visualBg: string;
   textColor: string; accentColor: string;
-  mockup: string; slug: string;
+  mockup: string; slug: string; images?: string[];
 }
 
 function ProjHook({ text, textColor }: { text: string; textColor: string }) {
@@ -218,7 +257,7 @@ function ProjTag({ label, textColor, borderAlpha }: { label: string; textColor: 
 
 function CTA({ hov, to = "/" }: { hov: boolean; to?: string }) {
   return (
-    <Link to={to} style={{
+    <Link to={to} className="motion-press" style={{
       display: "inline-flex",
       alignItems: "center",
       gap: 10,
@@ -251,7 +290,7 @@ function Project01({ p }: { p: ProjData }) {
   const [hov, setHov] = useState(false);
 
   return (
-    <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <article className="motion-hover-brutalist" onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ backgroundColor: p.sectionBg, borderBottom: `3px solid ${INK}` }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.2)` }}>
@@ -261,7 +300,7 @@ function Project01({ p }: { p: ProjData }) {
 
       <div className="proj01-grid">
         <div style={{ borderRight: `2px solid rgba(35,0,63,0.2)` }} className="proj-visual-col">
-          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} />
+          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} images={p.images} />
         </div>
         <div className="proj-info proj-info--r">
           <div>
@@ -284,7 +323,7 @@ function Project02({ p }: { p: ProjData }) {
   const [hov, setHov] = useState(false);
 
   return (
-    <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <article className="motion-hover-brutalist" onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ backgroundColor: p.sectionBg, borderBottom: `3px solid ${INK}` }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.2)` }}>
@@ -304,7 +343,7 @@ function Project02({ p }: { p: ProjData }) {
           <CTA hov={hov} to={projectPath(p)} />
         </div>
         <div className="proj-visual-col">
-          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} />
+          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} images={p.images} />
         </div>
       </div>
     </article>
@@ -317,7 +356,7 @@ function Project03({ p }: { p: ProjData }) {
   const [hov, setHov] = useState(false);
 
   return (
-    <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <article className="motion-hover-brutalist" onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ backgroundColor: p.sectionBg, borderBottom: `3px solid ${INK}` }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.2)` }}>
@@ -326,7 +365,7 @@ function Project03({ p }: { p: ProjData }) {
       </div>
 
       <div style={{ borderBottom: `2px solid rgba(35,0,63,0.2)` }}>
-        <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} />
+        <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} images={p.images} />
       </div>
 
       <div className="proj03-info">
@@ -347,7 +386,7 @@ function Project04({ p }: { p: ProjData }) {
   const [hov, setHov] = useState(false);
 
   return (
-    <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <article className="motion-hover-brutalist" onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ backgroundColor: p.sectionBg }}>
 
       <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.15)` }}>
@@ -365,7 +404,7 @@ function Project04({ p }: { p: ProjData }) {
       {/* Visual + info */}
       <div className="proj04-grid" style={{ borderTop: `2px solid rgba(35,0,63,0.15)` }}>
         <div style={{ borderRight: `2px solid rgba(35,0,63,0.15)` }} className="proj-visual-col">
-          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} />
+          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} images={p.images} />
         </div>
         <div className="proj-info" style={{ justifyContent: "space-between" }}>
           <div>
@@ -430,15 +469,16 @@ const PROJECTS: ProjData[] = [
 
 export default function Work() {
   const [filter, setFilter] = useState<"all" | ProjData["category"]>("all");
+  const sectionReveal = useScrollReveal<HTMLHeadingElement>();
   const visibleProjects = filter === "all" ? PROJECTS : PROJECTS.filter((project) => project.category === filter);
 
   return (
     <section id="work" style={{ borderTop: `3px solid ${INK}` }}>
       {/* Header */}
       <div style={{ backgroundColor: OAT, borderBottom: `3px solid ${INK}` }}>
-        <div className="proj-section-header">
+        <div className="proj-section-header motion-stagger is-visible">
           <div>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 3vw, 48px)", fontWeight: 700, color: INK, letterSpacing: "-0.03em", margin: 0, lineHeight: 1 }}>
+            <h2 ref={sectionReveal.ref} className={sectionReveal.className} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 3vw, 48px)", fontWeight: 700, color: INK, letterSpacing: "-0.03em", margin: 0, lineHeight: 1 }}>
               SELECTED WORK
             </h2>
             <div className="work-filters" role="group" aria-label="Filter projects by category">

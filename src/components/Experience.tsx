@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useScrollReveal } from "../animations";
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
@@ -13,8 +14,9 @@ const ITEMS = [
 ];
 
 export default function Experience() {
+  const sectionReveal = useScrollReveal<HTMLElement>();
   return (
-    <section id="experience" style={{ backgroundColor: BLUE, borderTop: `3px solid ${INK}` }}>
+    <section id="experience" ref={sectionReveal.ref} className={sectionReveal.className} style={{ backgroundColor: BLUE, borderTop: `3px solid ${INK}` }}>
       <div style={{ borderBottom: `2px solid ${INK}` }}>
         <div className="exp-header">
           <h2 style={{
@@ -29,9 +31,9 @@ export default function Experience() {
         </div>
       </div>
 
-      {ITEMS.map((item, i) => (
-        <Row key={i} item={item} last={i === ITEMS.length - 1} />
-      ))}
+      <div className="motion-stagger is-visible">
+        {ITEMS.map((item, i) => <Row key={i} item={item} last={i === ITEMS.length - 1} />)}
+      </div>
     </section>
   );
 }

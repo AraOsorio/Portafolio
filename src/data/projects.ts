@@ -10,6 +10,7 @@ export interface ProjectMeta {
   heroText: string;
   accentColor: string;
   mockup: string;
+  images?: string[];
   nextSlug: string;
   nextTitle: string;
 }
