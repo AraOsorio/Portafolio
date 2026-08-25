@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
-const LINKS = ["TRABAJOS", "ACERCA DE MI", "EXPERIENCIA", "HABLEMOS:)"] as const;
+const LINKS = [
+  { label: "TRABAJOS", href: "#work" },
+  { label: "ACERCA DE MI", href: "#about" },
+  { label: "EXPERIENCIA", href: "#experience" },
+  { label: "HABLEMOS:)", href: "#contact" },
+] as const;
 
 const INK    = "#23003F";
 const BLUE   = "#8CA7F4";
@@ -39,10 +44,10 @@ export default function Nav() {
 
           <ul className="nav-links">
             {LINKS.map((l) => (
-              <li key={l}>
-                <a href={`#${l.toLowerCase()}`} className="nav-link">{l}</a>
+             <li key={l.label}>
+               <a href={l.href} className="nav-link">{l.label}</a>
               </li>
-            ))}
+))}
           </ul>
 
           <button
@@ -75,9 +80,9 @@ export default function Nav() {
       >
         <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
           {LINKS.map((l, i) => (
-            <li key={l} style={{ borderBottom: i < LINKS.length - 1 ? "1px solid rgba(254,248,240,0.12)" : "none" }}>
+            <li key={l.label} style={{ borderBottom: i < LINKS.length - 1 ? "1px solid rgba(254,248,240,0.12)" : "none" }}>
               <a
-                href={`#${l.toLowerCase()}`}
+                href={l.href}
                 onClick={() => setOpen(false)}
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
@@ -93,7 +98,7 @@ export default function Nav() {
                 onMouseEnter={(e) => ((e.target as HTMLElement).style.color = ZEST)}
                 onMouseLeave={(e) => ((e.target as HTMLElement).style.color = OAT)}
               >
-                {l}
+                {l.label}
               </a>
             </li>
           ))}

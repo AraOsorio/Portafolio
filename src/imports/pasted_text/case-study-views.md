@@ -26,7 +26,7 @@ Create these project pages:
 
 /works/mira-app
 
-/works/venture-predictor
+/works/oncobot
 
 /works/project-builder
 

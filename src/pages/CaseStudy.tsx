@@ -597,7 +597,7 @@ function OncoBotCaseStudy({ project }: { project: ReturnType<typeof getProject> 
 
   return <>
     {section("01", "CUANDO TODA LA INFORMACIÓN IMPORTA", <div className="cs-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0 80px" }}><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(22px, 2.5vw, 32px)", margin: 0 }}>ATENCIÓN ONCOLÓGICA INFANTIL</h3><div><p style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, lineHeight: 1.7, margin: "0 0 20px" }}>OncoBot aborda las necesidades de pacientes oncológicos infantiles y sus tutores, reuniendo información clínica y apoyo en una misma experiencia.</p>{note("Proyecto desarrollado durante un Diplomado UX Design.", 80)}</div></div>, OAT, INK, OAT)}
-    {section("02", "EL PROBLEMA", <><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 4vw, 52px)", fontWeight: 700, color: OAT, lineHeight: 0.95, maxWidth: 900, margin: "0 0 40px" }}>Reducir el tiempo de espera y facilitar la atención en una emergencia vital.</p>{cards(["Falta de una ficha clínica portátil y accesible.", "Necesidad de asesoría y contención ante una urgencia.", "Falta de priorización en la atención médica."], INK)}</>, INK, OAT, ZEST, INK)}
+    {section("02", "EL PROBLEMA", <><p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(24px, 4vw, 52px)", fontWeight: 700, color: OAT, lineHeight: 0.95, maxWidth: 900, margin: "0 0 40px" }}>Reducir el tiempo de espera y facilitar la atención en una emergencia vital.</p>{cards(["Falta de una ficha clínica portátil y accesible.", "Necesidad de asesoría y contención ante una urgencia.", "Falta de priorización en la atención médica."], INK)}</>, INK, OAT, ZEST)}
     <OncoBotResearch />
     {section("04", "ENTENDER A QUIENES CUIDAN", <><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(22px, 2.5vw, 32px)", margin: "0 0 32px" }}>DOS PROTOPERSONAS, UNA NECESIDAD COMPARTIDA.</h3>{cards(["Cecilia Díaz, 48 años, asistente social: busca una guía y fuente fidedigna.", "Karen Muñoz, 33 años, terapeuta ocupacional: espera agilizar los procesos clínicos.", "Ambas valoran orientación, apoyo y facilidad para la atención."])}</>, OAT)}
     {section("05", "MAPEAR LA EXPERIENCIA", <div className="cs-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0 80px" }}><h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 28, margin: 0 }}>CUSTOMER JOURNEY</h3><div><ImagePlaceholder label="CUSTOMER JOURNEY -- ADD ORIGINAL MAP" aspectRatio="16/7" bg={PURPLE} /><p style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.6, margin: "24px 0 0" }}>Se observaron dificultades en onboarding, iconos, ayuda inmediata, importación de proveedores e informes.</p></div></div>, OAT)}
@@ -642,7 +642,7 @@ export default function CaseStudy() {
 
   if (!project) return <Navigate to="/" replace />;
 
-  if (project.slug === "venture-predictor") {
+  if (project.slug === "oncobot") {
     return <div style={{ backgroundColor: OAT }}><CaseNav project={project} /><ProjectHero project={project} /><OncoBotCaseStudy project={project} /></div>;
   }
 

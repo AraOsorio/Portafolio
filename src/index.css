@@ -494,6 +494,7 @@ body {
 
   /* Case study two-col collapse */
   .cs-two-col { grid-template-columns: 1fr; gap: 32px 0; }
+  .oncobot-case-study .cs-two-col { grid-template-columns: 1fr !important; gap: 32px 0 !important; }
 }
 
 /* ═══════════════════════════════════════════

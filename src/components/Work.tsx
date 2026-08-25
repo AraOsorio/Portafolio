@@ -368,60 +368,23 @@ function Project03({ p }: { p: ProjData }) {
   );
 }
 
-// ── Project 04: large title + asymmetric split (Oat Milk) ────────────────────
-
-function Project04({ p }: { p: ProjData }) {
-  const [hov, setHov] = useState(false);
-
-  return (
-    <article className="motion-hover-brutalist" onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ backgroundColor: p.sectionBg }}>
-
-      <div className="proj-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.15)` }}>
-        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: INK, opacity: 0.35 }}>{p.num} / 06</span>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{p.tags.map((t) => <ProjTag key={t} label={t} textColor={INK} borderAlpha={0.35} />)}</div>
-      </div>
-
-      {/* Oversized title */}
-      <div className="proj04-title-strip" style={{ borderBottom: `2px solid rgba(35,0,63,0.15)` }}>
-        <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(56px, 10vw, 148px)", fontWeight: 700, color: INK, letterSpacing: "-0.05em", lineHeight: 0.85, margin: 0 }}>
-          RENDI<span style={{ color: hov ? PURPLE : BLUE, transition: "color 0.3s" }}>CIONES</span>
-        </h3>
-      </div>
-
-      {/* Visual + info */}
-      <div className="proj04-grid" style={{ borderTop: `2px solid rgba(35,0,63,0.15)` }}>
-        <div style={{ borderRight: `2px solid rgba(35,0,63,0.15)` }} className="proj-visual-col">
-          <VisualBox bg={p.visualBg} fg={INK} accent={p.accentColor} mockup={p.mockup} hov={hov} year={p.year} images={p.images} />
-        </div>
-        <div className="proj-info" style={{ justifyContent: "space-between" }}>
-          <div>
-            <ProjHook text={p.hook} textColor={INK} />
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "clamp(13px, 1.2vw, 16px)", color: INK, opacity: 0.68, lineHeight: 1.7, margin: 0 }}>{p.description}</p>
-          </div>
-          <CTA hov={hov} to={projectPath(p)} />
-        </div>
-      </div>
-    </article>
-  );
-}
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const PROJECTS: ProjData[] = [
   {
     num: "01", title: ["¿Puede la IA acompañar nuestras emociones sin decirnos qué sentir?"], tags: ["UX/UI", "PRODUCT DESIGN"], category: "ux-ui",
-    hook: "¿Puede la IA acompañar nuestras emociones sin decirnos qué sentir?",
+    hook: "MIRA APP",
     description: "Una app de bienestar mental con IA que transforma el autocuidado en una experiencia más humana, accesible y personalizada.",
     year: "2025", sectionBg: BLUE, visualBg: "#6e8de0", images: [MIRA_IMAGE_01, MIRA_IMAGE_02, MIRA_IMAGE_03],
     textColor: INK, accentColor: ZEST, mockup: "phone", slug: "mira-app",
   },
   {
-    num: "02", title: ["ONCOBOT"], tags: ["UX/UI", "UX RESEARCH", "PRODUCT DESIGN"], category: "ux-ui",
-    hook: "¿Y si pudieras tener toda la información del paciente al instante, desde un solo lugar?",
+    num: "02", title: ["¿Y si pudieras tener toda la información del paciente al instante?"], tags: ["UX/UI", "UX RESEARCH", "PRODUCT DESIGN"], category: "ux-ui",
+    hook: "ONCOBOT",
     description: "Proyecto UX/UI para centralizar la información de pacientes oncológicos infantiles y facilitar la orientación de sus tutores durante la atención médica.",
     year: "2025", sectionBg: PURPLE, visualBg: "#c270e0",
-    textColor: INK, accentColor: BLUE, mockup: "dashboard", slug: "venture-predictor",
+    textColor: INK, accentColor: BLUE, mockup: "dashboard", slug: "oncobot",
   },
   {
     num: "03", title: ["PROJECT", "BUILDER"], tags: ["UX/UI", "PRODUCT DESIGN"], category: "ux-ui",
@@ -497,8 +460,7 @@ export default function Work() {
         if (project.num === "01") return <Project01 key={project.slug} p={project} />;
         if (project.num === "02") return <Project02 key={project.slug} p={project} />;
         if (project.num === "03") return <Project03 key={project.slug} p={project} />;
-        if (project.num === "04") return <Project04 key={project.slug} p={project} />;
-        return <Project01 key={project.slug} p={project} />;
+        return null;
       })}
     </section>
   );

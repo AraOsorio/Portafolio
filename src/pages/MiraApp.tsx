@@ -1132,7 +1132,7 @@ function NextProject() {
   return (
     <section style={{ backgroundColor: INK }}>
       <Link
-        to="/works/venture-predictor"
+        to="/works/oncobot"
         onMouseEnter={() => setHov(true)}
         onMouseLeave={() => setHov(false)}
         style={{ display: "block", padding: "80px var(--pad-x)", textDecoration: "none", backgroundColor: hov ? "#160026" : INK, transition: "background-color 0.2s" }}
