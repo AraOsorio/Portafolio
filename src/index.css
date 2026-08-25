@@ -154,12 +154,24 @@ body {
   z-index: 1;
 }
 
+.hero-headline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(40px, 6.5vw, 96px);
+  line-height: 0.9;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.04em;
+  max-width: 1000px;
+  text-wrap: balance;
+}
+
 .hero-name {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: clamp(56px, 11vw, 180px);
+  font-size: clamp(32px, 5vw, 72px);
   line-height: 0.9;
-  color: var(--ink);
+  color: var(--purple);
   margin: 0;
   letter-spacing: -0.04em;
 }
@@ -364,7 +376,8 @@ body {
 @media (max-width: 768px) {
   /* Hero */
   .hero-section { min-height: 92svh; }
-  .hero-name { font-size: clamp(48px, 13vw, 88px); }
+  .hero-headline { font-size: clamp(36px, 9vw, 64px); }
+  .hero-name { font-size: clamp(30px, 8vw, 56px); }
 
   /* Proj04 oversized title */
   .proj04-title-strip { padding: 32px var(--pad-x) 24px; }
@@ -383,7 +396,8 @@ body {
 
   /* Hero */
   .hero-section { min-height: 95svh; }
-  .hero-name { font-size: clamp(44px, 14vw, 68px); }
+  .hero-headline { font-size: clamp(32px, 9vw, 44px); }
+  .hero-name { font-size: clamp(28px, 8vw, 42px); }
   .hero-footer { padding-bottom: 40px; gap: 16px; }
   .hero-badge  { max-width: calc(100vw - 40px); }
 
@@ -588,5 +602,6 @@ body {
 ═══════════════════════════════════════════ */
 @media (max-width: 375px) {
   :root { --pad-x: 16px; }
-  .hero-name { font-size: clamp(40px, 13vw, 60px); }
+  .hero-headline { font-size: clamp(30px, 8.5vw, 40px); }
+  .hero-name { font-size: clamp(26px, 7.5vw, 36px); }
 }

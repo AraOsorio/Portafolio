@@ -97,22 +97,12 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* ARACELLI */}
-        <h1 className="hero-name">ARACELLI</h1>
+        {/* Main headline */}
+        <h1 className="hero-headline">DISEÑO PARA HACER LAS COSAS MÁS HUMANAS.</h1>
 
-        {/* OSORIO + blue underblock */}
+        {/* Identity */}
         <div style={{ position: "relative", lineHeight: 1 }}>
-          <div aria-hidden style={{
-            position: "absolute",
-            bottom: "8%",
-            left: 0,
-            height: "52%",
-            width: "clamp(160px, 36vw, 540px)",
-            backgroundColor: BLUE,
-            zIndex: 0,
-            pointerEvents: "none",
-          }} />
-          <h1 className="hero-name" style={{ position: "relative", zIndex: 1 }}>OSORIO</h1>
+          <h2 className="hero-name" style={{ position: "relative", zIndex: 1 }}>ARACELLI OSORIO</h2>
         </div>
 
         {/* Footer row */}
