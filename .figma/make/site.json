@@ -1,0 +1,10 @@
+{
+  "description": "Create and showcase a professional portfolio effortlessly to highlight your skills and projects, perfect for freelancers and creatives.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
