@@ -393,13 +393,7 @@ const PROJECTS: ProjData[] = [
     year: "2024", sectionBg: ZEST, visualBg: "#b8d06a",
     textColor: INK, accentColor: PURPLE, mockup: "cards", slug: "project-builder",
   },
-  {
-    num: "04", title: ["RENDI-", "CIONES"], tags: ["UX RESEARCH", "PRODUCT DESIGN"], category: "ux-ui",
-    hook: "¿Cómo transformar un proceso administrativo complejo en una experiencia que la gente quiera usar?",
-    description: "Financial reporting product redesigned from the ground up based on in-depth user research. Simplified a complex administrative flow into a clear, intuitive experience.",
-    year: "2024", sectionBg: OAT, visualBg: "#e8e0d5",
-    textColor: INK, accentColor: BLUE, mockup: "report", slug: "rendiciones",
-  },
+  
   {
     num: "05", title: ["IDENTIDAD", "VISUAL"], tags: ["BRANDING", "ART DIRECTION"], category: "graphic-design",
     hook: "¿Cómo hacer visible la personalidad de una marca desde el primer contacto?",
@@ -460,7 +454,7 @@ export default function Work() {
         if (project.num === "01") return <Project01 key={project.slug} p={project} />;
         if (project.num === "02") return <Project02 key={project.slug} p={project} />;
         if (project.num === "03") return <Project03 key={project.slug} p={project} />;
-        return null;
+        return <Project01 key={project.slug} p={project} />;
       })}
     </section>
   );
